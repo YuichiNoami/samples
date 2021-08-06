@@ -1,16 +1,21 @@
 import { Component } from '@angular/core';
+import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 
 @Component({
   selector: 'my-app',
-  //ブラケット構文
-  template: `<img [src]="image" />`
-
-  //bind-xxxxx属性
-  //template: `<img bind-src="image" />`
-
-  //Interpolation
-  //template: `<img src="{{image}}" />`
+  template: `<div [innerHTML]="safeMsg"></div>`
 })
 export class AppComponent {
-  image = 'http://www.wings.msn.to/image/wings.jpg';
+  safeMsg: SafeHtml;
+  msg: string = `<script>window.alert("ようこそ！");</script>
+  <div style="font-size: 20px;">
+    <p>WINGSプロジェクト</p>
+  </div>
+  <a href="http://www.wings.msn.to">Web</a>
+  <button>同意する</button>
+  <input type="button" onclick="alert('OK')" value="クリック" />`;
+
+  constructor(private sanitizer: DomSanitizer) {
+    this.safeMsg = sanitizer.bypassSecurityTrustHtml(this.msg);
+  }
 }
