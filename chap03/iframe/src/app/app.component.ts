@@ -3,14 +3,6 @@ import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 
 @Component({
   selector: 'my-app',
-  /*
-  template: `
-    <iframe [src]="url"></iframe>
-  `,
-  */
-
-  //信頼済みマークを付与する場合
-  
   template: `
     <iframe [src]="safeUrl"></iframe>
   `,  
